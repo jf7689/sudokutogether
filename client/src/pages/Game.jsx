@@ -1,7 +1,10 @@
+import SudokuGrid from "@/components/SudokuGrid";
 
 const Game = () => {
   return (
-    <div>Game</div>
+    <div className="flex justify-center items-center flex-col h-screen bg-slate-900">
+      <SudokuGrid />
+    </div>
   );
 }
 
