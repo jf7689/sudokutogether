@@ -1,11 +1,11 @@
-import SudokuGrid from "@/components/SudokuGrid";
+import Sudoku from "@/components/Sudoku";
 
 const Game = () => {
   return (
     <div className="flex justify-center items-center flex-col h-screen bg-slate-900">
-      <SudokuGrid />
+      <Sudoku />
     </div>
   );
-}
+};
 
-export default Game
+export default Game;
