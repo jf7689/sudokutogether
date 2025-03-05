@@ -1,11 +1,20 @@
 import SudokuCell from "./SudokuCell";
 
-const SudokuGrid = ({ grid }) => {
+const SudokuGrid = ({ grid, selectedCell, onCellClick }) => {
   return (
     <div className="grid grid-cols-9 gap-2 w-[95vw]">
-      {grid.map((digit, i) => {
-        return <SudokuCell key={i} digit={digit} />;
-      })}
+      {grid.map((row, rowIndex) =>
+        row.map((digit, colIndex) => (
+          <SudokuCell
+            key={`${rowIndex}-${colIndex}`}
+            digit={digit}
+            row={rowIndex}
+            col={colIndex}
+            selectedCell={selectedCell}
+            onCellClick={onCellClick}
+          />
+        ))
+      )}
     </div>
   );
 };

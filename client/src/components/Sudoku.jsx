@@ -3,15 +3,37 @@ import SudokuGrid from "./SudokuGrid";
 import VirtualKeyboard from "./VirtualKeyboard";
 
 const Sudoku = () => {
-  const puzzle = "009000706000094203000008000006002001051000860700900500000100000105420000803000600";
-  const [grid, setGrid] = useState([...puzzle].map(Number));
-  const [selectedCell, setselectedCell] = useState();
-  const [selectedNumber, setselectedNumber] = useState();
+  const initialGrid = [
+    [0, 0, 9, 0, 0, 0, 7, 0, 6],
+    [0, 0, 0, 0, 9, 4, 2, 0, 3],
+    [0, 0, 0, 0, 0, 8, 0, 0, 0],
+    [0, 0, 6, 0, 0, 2, 0, 0, 1],
+    [0, 5, 1, 0, 0, 0, 8, 6, 0],
+    [7, 0, 0, 9, 0, 0, 5, 0, 0],
+    [0, 0, 0, 1, 0, 0, 0, 0, 0],
+    [1, 0, 5, 4, 2, 0, 0, 0, 0],
+    [8, 0, 3, 0, 0, 0, 6, 0, 0],
+  ];
+  const [grid, setGrid] = useState(initialGrid);
+  const [selectedCell, setSelectedCell] = useState([0, 0]);
+
+  const handleCellClick = (row, col) => {
+    setSelectedCell([row, col]);
+  };
+
+  const handleNumberClick = (row, col, num) => {
+    const newGrid = [...grid];
+    if (initialGrid[row][col] !== 0) {
+      return;
+    }
+    newGrid[row][col] = num;
+    setGrid(newGrid);
+  };
 
   return (
-    <div className="flex flex-col gap-4">
-      <SudokuGrid grid={grid} />
-      <VirtualKeyboard />
+    <div className="flex flex-col items-center gap-4">
+      <SudokuGrid grid={grid} selectedCell={selectedCell} onCellClick={handleCellClick} />
+      <VirtualKeyboard selectedCell={selectedCell} onNumberClick={handleNumberClick} />
     </div>
   );
 };
