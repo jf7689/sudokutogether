@@ -34,14 +34,52 @@ const Sudoku = () => {
   };
 
   useEffect(() => {
-    if (initialCellsMap[selectedCell[0]][selectedCell[1]] === true) {
-      return;
-    }
+    // Handle keyboard controls for updating cell value and moving selectedCell (including wrapping)
     const handleKeyDown = (e) => {
       if (e.key >= "1" && e.key <= "9") {
+        // Exit early if cell is an inital number in the sudoku
+        if (initialCellsMap[selectedCell[0]][selectedCell[1]] === true) {
+          return;
+        }
         const newGrid = [...grid];
         newGrid[selectedCell[0]][selectedCell[1]] = Number(e.key);
         setGrid(newGrid);
+      } else if (e.key === "Backspace" || e.key === "Delete") {
+        // Exit early if cell is an inital number in the sudoku or if cell already is 0
+        if (
+          initialCellsMap[selectedCell[0]][selectedCell[1]] === true ||
+          grid[selectedCell[0]][selectedCell[1]] === 0
+        ) {
+          return;
+        }
+        const newGrid = [...grid];
+        // Set cell to 0 because the grid doesn't display text for a value of 0
+        newGrid[selectedCell[0]][selectedCell[1]] = 0;
+        setGrid(newGrid);
+      } else if (e.key === "w" || e.key === "ArrowUp") {
+        if (selectedCell[0] === 0) {
+          setSelectedCell([8, selectedCell[1]]);
+          return;
+        }
+        setSelectedCell([selectedCell[0] - 1, selectedCell[1]]);
+      } else if (e.key === "s" || e.key === "ArrowDown") {
+        if (selectedCell[0] === 8) {
+          setSelectedCell([0, selectedCell[1]]);
+          return;
+        }
+        setSelectedCell([selectedCell[0] + 1, selectedCell[1]]);
+      } else if (e.key === "a" || e.key === "ArrowLeft") {
+        if (selectedCell[1] === 0) {
+          setSelectedCell([selectedCell[0], 8]);
+          return;
+        }
+        setSelectedCell([selectedCell[0], selectedCell[1] - 1]);
+      } else if (e.key === "d" || e.key === "ArrowRight") {
+        if (selectedCell[1] === 8) {
+          setSelectedCell([selectedCell[0], 0]);
+          return;
+        }
+        setSelectedCell([selectedCell[0], selectedCell[1] + 1]);
       }
     };
 
