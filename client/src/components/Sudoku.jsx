@@ -19,9 +19,26 @@ const initialCellsMap = initialGrid.map((row) => row.map((cell) => cell !== 0));
 const Sudoku = () => {
   const [grid, setGrid] = useState(initialGrid);
   const [selectedCell, setSelectedCell] = useState([0, 0]);
+  const [notesMode, setNotesMode] = useState(false);
 
   const handleCellClick = (row, col) => {
     setSelectedCell([row, col]);
+  };
+
+  const handleNotesClick = () => {
+    setNotesMode(!notesMode);
+  };
+
+  const handleResetClick = () => {
+    const newGrid = [...grid];
+    newGrid.map((row, rowIndex) =>
+      row.map((cell, colIndex) => {
+        if (initialCellsMap[rowIndex][colIndex] === false) {
+          newGrid[rowIndex][colIndex] = 0;
+        }
+      })
+    );
+    setGrid(newGrid);
   };
 
   const handleNumberClick = (row, col, num) => {
@@ -93,7 +110,13 @@ const Sudoku = () => {
   return (
     <div className="flex flex-col items-center gap-4">
       <SudokuGrid grid={grid} selectedCell={selectedCell} onCellClick={handleCellClick} />
-      <VirtualKeyboard selectedCell={selectedCell} onNumberClick={handleNumberClick} />
+      <VirtualKeyboard
+        selectedCell={selectedCell}
+        notesMode={notesMode}
+        onNotesClick={handleNotesClick}
+        onResetClick={handleResetClick}
+        onNumberClick={handleNumberClick}
+      />
     </div>
   );
 };
