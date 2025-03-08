@@ -42,7 +42,8 @@ const Sudoku = () => {
   };
 
   const handleNumberClick = (row, col, num) => {
-    if (initialCellsMap[selectedCell[0]][selectedCell[1]] === true) {
+    // Exit early if cell is an inital number in the sudoku
+    if (initialCellsMap[row][col] === true) {
       return;
     }
     const newGrid = [...grid];
@@ -54,13 +55,7 @@ const Sudoku = () => {
     // Handle keyboard controls for updating cell value and moving selectedCell (including wrapping)
     const handleKeyDown = (e) => {
       if (e.key >= "1" && e.key <= "9") {
-        // Exit early if cell is an inital number in the sudoku
-        if (initialCellsMap[selectedCell[0]][selectedCell[1]] === true) {
-          return;
-        }
-        const newGrid = [...grid];
-        newGrid[selectedCell[0]][selectedCell[1]] = Number(e.key);
-        setGrid(newGrid);
+        handleNumberClick(selectedCell[0], selectedCell[1], Number(e.key));
       } else if (e.key === "Backspace" || e.key === "Delete") {
         // Exit early if cell is an inital number in the sudoku or if cell already is 0
         if (
@@ -109,7 +104,7 @@ const Sudoku = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <SudokuGrid grid={grid} selectedCell={selectedCell} onCellClick={handleCellClick} />
+      <SudokuGrid grid={grid} selectedCell={selectedCell} notesMode={notesMode} onCellClick={handleCellClick} />
       <VirtualKeyboard
         selectedCell={selectedCell}
         notesMode={notesMode}
