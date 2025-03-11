@@ -1,19 +1,21 @@
-const SudokuCell = ({ digit, row, col, selectedCell, notes, onCellClick }) => {
+const SudokuCell = ({ digit, row, col, initialCellsMap, selectedCell, notes, matchingNumber, onCellClick }) => {
   return (
     <div className="flex items-center justify-center w-8 h-8" onClick={() => onCellClick(row, col)}>
       {digit > 0 ? (
         <div
-          className={`flex items-center justify-center ${
-            (selectedCell[0] === row) & (selectedCell[1] === col) ? "bg-slate-700" : "bg-slate-900"
-          } w-full h-full text-sky-500 text-2xl ring-1 ring-amber-500 rounded-sm`}
+          className={`flex items-center justify-center w-full h-full ${
+            matchingNumber ? "text-sky-300" : initialCellsMap[row][col] ? "text-gray-300" : "text-sky-500"
+          } text-2xl ${matchingNumber && "font-bold"} ring-1 ${
+            selectedCell[0] === row || selectedCell[1] === col ? "ring-amber-500" : "ring-amber-900"
+          } rounded-sm`}
         >
           {digit}
         </div>
       ) : (
         <div
-          className={`grid grid-cols-3 ${
-            (selectedCell[0] === row) & (selectedCell[1] === col) ? "bg-slate-700" : "bg-slate-900"
-          } w-full h-full ring-1 ring-amber-500 rounded-sm`}
+          className={`grid grid-cols-3 w-full h-full ring-1 ${
+            selectedCell[0] === row || selectedCell[1] === col ? "ring-amber-500" : "ring-amber-900"
+          } rounded-sm`}
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
             <div

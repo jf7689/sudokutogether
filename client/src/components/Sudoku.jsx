@@ -61,17 +61,7 @@ const Sudoku = () => {
   };
 
   const handleResetClick = () => {
-    setNotes([
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-      [[], [], [], [], [], [], [], [], []],
-    ]);
+    setNotes(notes.map((row) => row.map(() => [])));
 
     const newGrid = [...grid];
     newGrid.map((row, rowIndex) =>
@@ -134,6 +124,8 @@ const Sudoku = () => {
         const newGrid = [...grid];
         newGrid[row][col] = Number(e.key);
         setGrid(newGrid);
+      } else if (e.key === " ") {
+        setNotesMode(!notesMode);
       } else if (e.key === "Backspace" || e.key === "Delete") {
         // Exit early if cell is an inital number in the sudoku or if cell already is 0
         if (initialCellsMap[row][col] === true || (grid[row][col] === 0 && !notes[row][col].length)) {
@@ -188,7 +180,13 @@ const Sudoku = () => {
 
   return (
     <div className="flex flex-col items-center gap-4">
-      <SudokuGrid grid={grid} selectedCell={selectedCell} notes={notes} onCellClick={handleCellClick} />
+      <SudokuGrid
+        initialCellsMap={initialCellsMap}
+        grid={grid}
+        selectedCell={selectedCell}
+        notes={notes}
+        onCellClick={handleCellClick}
+      />
       <VirtualKeyboard
         selectedCell={selectedCell}
         notesMode={notesMode}
