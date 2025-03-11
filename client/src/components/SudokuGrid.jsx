@@ -1,6 +1,6 @@
 import SudokuCell from "./SudokuCell";
 
-const SudokuGrid = ({ grid, selectedCell, notesMode, onCellClick }) => {
+const SudokuGrid = ({ grid, selectedCell, notes, onCellClick }) => {
   return (
     <div className="grid grid-cols-9 gap-2 w-[95vw]">
       {grid.map((row, rowIndex) =>
@@ -11,7 +11,7 @@ const SudokuGrid = ({ grid, selectedCell, notesMode, onCellClick }) => {
             row={rowIndex}
             col={colIndex}
             selectedCell={selectedCell}
-            notesMode={notesMode}
+            notes={notes[rowIndex][colIndex]}
             onCellClick={onCellClick}
           />
         ))

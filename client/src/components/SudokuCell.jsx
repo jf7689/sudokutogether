@@ -1,8 +1,4 @@
-import { useState } from "react";
-
-const SudokuCell = ({ digit, row, col, selectedCell, onCellClick }) => {
-  const [notes, setNotes] = useState([]);
-
+const SudokuCell = ({ digit, row, col, selectedCell, notes, onCellClick }) => {
   return (
     <div className="flex items-center justify-center w-8 h-8" onClick={() => onCellClick(row, col)}>
       {digit > 0 ? (
@@ -20,7 +16,10 @@ const SudokuCell = ({ digit, row, col, selectedCell, onCellClick }) => {
           } w-full h-full ring-1 ring-amber-500 rounded-sm`}
         >
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
-            <div key={num} className="flex justify-center text-gray-100 text-[7px]">
+            <div
+              key={num}
+              className={`flex justify-center text-gray-100 text-[7px] ${!notes.includes(num) && "invisible"}`}
+            >
               {num}
             </div>
           ))}

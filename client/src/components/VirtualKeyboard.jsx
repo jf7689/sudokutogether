@@ -1,4 +1,4 @@
-const VirtualKeyboard = ({ selectedCell, notesMode, onNotesClick, onResetClick, onNumberClick }) => {
+const VirtualKeyboard = ({ selectedCell, notesMode, onNotesClick, onEraseClick, onResetClick, onNumberClick }) => {
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
@@ -20,7 +20,7 @@ const VirtualKeyboard = ({ selectedCell, notesMode, onNotesClick, onResetClick, 
         </div>
         <div
           className="hover:bg-slate-950 active:bg-slate-950 w-full h-full cursor-pointer"
-          onClick={() => onNumberClick(selectedCell[0], selectedCell[1], 0)}
+          onClick={() => onEraseClick(selectedCell[0], selectedCell[1])}
         >
           <div className="flex flex-col items-center gap-0">
             <svg
