@@ -1,10 +1,10 @@
-const SudokuCell = ({ digit, row, col, initialCellsMap, selectedCell, notes, matchingNumber, onCellClick }) => {
+const SudokuCell = ({ digit, row, col, initialCell, selectedCell, notes, matchingNumber, onCellClick }) => {
   return (
     <div className="flex items-center justify-center w-8 h-8" onClick={() => onCellClick(row, col)}>
       {digit > 0 ? (
         <div
           className={`flex items-center justify-center w-full h-full ${
-            matchingNumber ? "text-sky-300" : initialCellsMap[row][col] ? "text-gray-300" : "text-sky-500"
+            matchingNumber ? "text-sky-300" : initialCell ? "text-gray-300" : "text-sky-500"
           } text-2xl ${matchingNumber && "font-bold"} ring-1 ${
             selectedCell[0] === row || selectedCell[1] === col ? "ring-amber-500" : "ring-amber-900"
           } rounded-sm`}

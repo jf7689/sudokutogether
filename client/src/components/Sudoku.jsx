@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import SudokuGrid from "./SudokuGrid";
 import VirtualKeyboard from "./VirtualKeyboard";
 
@@ -40,25 +40,28 @@ const Sudoku = () => {
     setNotesMode(!notesMode);
   };
 
-  const handleEraseClick = (row, col) => {
-    // Exit early if cell is an inital number in the sudoku
-    if (initialCellsMap[row][col] === true) {
-      return;
-    }
+  const handleEraseClick = useCallback(
+    (row, col) => {
+      // Exit early if cell is an inital number in the sudoku
+      if (initialCellsMap[row][col] === true || (grid[row][col] === 0 && !notes[row][col].length)) {
+        return;
+      }
 
-    if (grid[row][col] !== 0) {
-      const newGrid = [...grid];
-      // Set cell to 0 because the grid doesn't display text for a value of 0
-      newGrid[row][col] = 0;
-      setGrid(newGrid);
-      return;
-    }
+      if (grid[row][col] !== 0) {
+        const newGrid = [...grid];
+        // Set cell to 0 because the grid doesn't display text for a value of 0
+        newGrid[row][col] = 0;
+        setGrid(newGrid);
+        return;
+      }
 
-    // Clear notes from the selected cell
-    const newNotes = [...notes];
-    newNotes[row][col] = [];
-    setNotes(newNotes);
-  };
+      // Clear notes from the selected cell
+      const newNotes = [...notes];
+      newNotes[row][col] = [];
+      setNotes(newNotes);
+    },
+    [grid, notes]
+  );
 
   const handleResetClick = () => {
     setNotes(notes.map((row) => row.map(() => [])));
@@ -75,27 +78,56 @@ const Sudoku = () => {
   };
 
   // Handle number clicks for the virtual keyboard
-  const handleNumberClick = (row, col, num) => {
-    // Exit early if cell is an inital number in the sudoku
-    if (initialCellsMap[row][col] === true) {
-      return;
-    }
+  const handleNumberClick = useCallback(
+    (row, col, num) => {
+      // Exit early if cell is an inital number in the sudoku
+      if (initialCellsMap[row][col] === true) {
+        return;
+      }
 
-    // Add and remove numbers from notes
-    if (notesMode) {
+      // Add and remove numbers from notes
+      if (notesMode) {
+        const newNotes = [...notes];
+        if (newNotes[row][col].includes(num)) {
+          newNotes[row][col] = newNotes[row][col].filter((prevNote) => prevNote !== num);
+        } else {
+          newNotes[row][col].push(num);
+        }
+        setNotes(newNotes);
+        return;
+      }
+
+      // Update grid
+      const newGrid = [...grid];
+      newGrid[row][col] = num;
+      setGrid(newGrid);
+
+      // Update notes to account for number input
       const newNotes = [...notes];
-      if (newNotes[row][col].includes(num)) {
-        newNotes[row][col] = newNotes[row][col].filter((prevNote) => prevNote !== num);
-      } else {
-        newNotes[row][col].push(num);
+      // Check rows and columns
+      for (let i = 0; i < 9; i++) {
+        if (newNotes[row][i].includes(num)) {
+          newNotes[row][i] = newNotes[row][i].filter((prevNote) => prevNote !== num);
+        }
+        if (newNotes[i][col].includes(num)) {
+          newNotes[i][col] = newNotes[i][col].filter((prevNote) => prevNote !== num);
+        }
+      }
+
+      // Check within the 3x3 box
+      const boxRow = Math.floor(row / 3);
+      const boxCol = Math.floor(col / 3);
+      for (let r = boxRow * 3; r < boxRow * 3 + 3; r++) {
+        for (let c = boxCol * 3; c < boxCol * 3 + 3; c++) {
+          if (newNotes[r][c].includes(num)) {
+            newNotes[r][c] = newNotes[r][c].filter((prevNote) => prevNote !== num);
+          }
+        }
       }
       setNotes(newNotes);
-      return;
-    }
-    const newGrid = [...grid];
-    newGrid[row][col] = num;
-    setGrid(newGrid);
-  };
+    },
+    [grid, notes, notesMode]
+  );
 
   useEffect(() => {
     // Handle keyboard controls for updating cell value and moving selectedCell (including wrapping)
@@ -104,46 +136,11 @@ const Sudoku = () => {
       const col = selectedCell[1];
 
       if (e.key >= "1" && e.key <= "9") {
-        // Exit early if cell is an inital number in the sudoku
-        if (initialCellsMap[row][col] === true) {
-          return;
-        }
-
-        // Add and remove numbers from notes
-        if (notesMode) {
-          const newNotes = [...notes];
-          if (newNotes[row][col].includes(Number(e.key))) {
-            newNotes[row][col] = newNotes[row][col].filter((prevNote) => prevNote !== Number(e.key));
-          } else {
-            newNotes[row][col].push(Number(e.key));
-          }
-          setNotes(newNotes);
-          return;
-        }
-
-        const newGrid = [...grid];
-        newGrid[row][col] = Number(e.key);
-        setGrid(newGrid);
+        handleNumberClick(row, col, Number(e.key));
       } else if (e.key === " ") {
         setNotesMode(!notesMode);
       } else if (e.key === "Backspace" || e.key === "Delete") {
-        // Exit early if cell is an inital number in the sudoku or if cell already is 0
-        if (initialCellsMap[row][col] === true || (grid[row][col] === 0 && !notes[row][col].length)) {
-          return;
-        }
-
-        if (grid[row][col] !== 0) {
-          const newGrid = [...grid];
-          // Set cell to 0 because the grid doesn't display text for a value of 0
-          newGrid[row][col] = 0;
-          setGrid(newGrid);
-          return;
-        }
-
-        // Clear notes from the selected cell
-        const newNotes = [...notes];
-        newNotes[row][col] = [];
-        setNotes(newNotes);
+        handleEraseClick(row, col);
       } else if (e.key === "w" || e.key === "ArrowUp") {
         if (row === 0) {
           setSelectedCell([8, col]);
@@ -176,7 +173,7 @@ const Sudoku = () => {
     return () => {
       document.removeEventListener("keydown", handleKeyDown);
     };
-  }, [grid, selectedCell, notes, notesMode]);
+  }, [selectedCell, notesMode, handleNumberClick, handleEraseClick]);
 
   return (
     <div className="flex flex-col items-center gap-4">

@@ -10,7 +10,7 @@ const SudokuGrid = ({ initialCellsMap, grid, selectedCell, notes, onCellClick })
             digit={digit}
             row={rowIndex}
             col={colIndex}
-            initialCellsMap={initialCellsMap}
+            initialCell={initialCellsMap[rowIndex][colIndex]}
             selectedCell={selectedCell}
             notes={notes[rowIndex][colIndex]}
             matchingNumber={digit === grid[selectedCell[0]][selectedCell[1]]}
