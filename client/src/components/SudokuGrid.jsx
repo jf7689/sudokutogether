@@ -2,7 +2,7 @@ import SudokuCell from "./SudokuCell";
 
 const SudokuGrid = ({ initialCellsMap, grid, selectedCell, notes, onCellClick }) => {
   return (
-    <div className="grid grid-cols-9 gap-2 w-[95vw]">
+    <div className="grid grid-cols-9 justify-items-center gap-2 max-w-[600px] max-h-[600px]">
       {grid.map((row, rowIndex) =>
         row.map((digit, colIndex) => (
           <SudokuCell
