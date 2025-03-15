@@ -1,16 +1,14 @@
 import express from "express";
-import dotenv from "dotenv";
 import cors from "cors";
+import env from "./config/env.js";
 import puzzlesRouter from "./routes/puzzles.js";
 
-dotenv.config();
-
 const app = express();
-const port = process.env.PORT || 3000;
+const port = env.port || 3000;
 
 app.use(
   cors({
-    origin: [process.env.ORIGIN],
+    origin: [env.origin],
     methods: ["GET"],
   })
 );
