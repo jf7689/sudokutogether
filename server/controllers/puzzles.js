@@ -1,7 +1,7 @@
 import supabase from "../config/supabaseClient.js";
 
 const getPuzzle = async (req, res) => {
-  const { difficulty } = req.body;
+  const { difficulty } = req.query;
 
   try {
     // Select the matching view to get puzzle from

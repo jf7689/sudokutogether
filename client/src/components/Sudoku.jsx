@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from "react";
 import SudokuGrid from "./SudokuGrid";
 import VirtualKeyboard from "./VirtualKeyboard";
+import { HOST } from "@/utils/constants";
 
 const initialGrid = [
   [0, 0, 9, 0, 0, 0, 7, 0, 6],
@@ -14,10 +15,10 @@ const initialGrid = [
   [8, 0, 3, 0, 0, 0, 6, 0, 0],
 ];
 
-const initialCellsMap = initialGrid.map((row) => row.map((cell) => cell !== 0));
-
 const Sudoku = () => {
-  const [grid, setGrid] = useState(initialGrid);
+  const [loading, setLoading] = useState(true);
+  const [grid, setGrid] = useState();
+  const [initialCellsMap, setinitialCellsMap] = useState();
   const [selectedCell, setSelectedCell] = useState([0, 0]);
   const [notesMode, setNotesMode] = useState(false);
   const [notes, setNotes] = useState([
@@ -175,23 +176,66 @@ const Sudoku = () => {
     };
   }, [selectedCell, notesMode, handleNumberClick, handleEraseClick]);
 
+  const convertStringToGrid = (sudokuString) => {
+    const newGrid = [];
+    for (let row = 0; row < 9; row++) {
+      const currentRow = [];
+      for (let col = 0; col < 9; col++) {
+        // Calculate the index in the string
+        const index = row * 9 + col;
+
+        currentRow.push(Number(sudokuString[index]));
+      }
+      newGrid.push(currentRow);
+    }
+    return newGrid;
+  };
+
+  useEffect(() => {
+    const fetchSudoku = async () => {
+      try {
+        const response = await fetch(`${HOST}/api/puzzles?difficulty=easy`, {
+          method: "GET",
+        });
+        const data = await response.json();
+        const { puzzle } = data.data;
+        const newGrid = convertStringToGrid(puzzle);
+        console.log(newGrid); // Can see a filled 2d array
+        setGrid[newGrid];
+        // setinitialCellsMap(newGrid.map((row) => row.map((cell) => cell !== 0)));
+      } catch (err) {
+        console.log(err);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetchSudoku();
+  }, []);
+
+  if (loading) return <div className="text-gray-300">Loading Sudoku puzzle...</div>;
+
   return (
     <div className="flex flex-col items-center gap-4">
-      <SudokuGrid
-        initialCellsMap={initialCellsMap}
-        grid={grid}
-        selectedCell={selectedCell}
-        notes={notes}
-        onCellClick={handleCellClick}
-      />
-      <VirtualKeyboard
-        selectedCell={selectedCell}
-        notesMode={notesMode}
-        onNotesClick={handleNotesClick}
-        onEraseClick={handleEraseClick}
-        onResetClick={handleResetClick}
-        onNumberClick={handleNumberClick}
-      />
+      {grid && (
+        <SudokuGrid
+          initialCellsMap={initialCellsMap}
+          grid={grid}
+          selectedCell={selectedCell}
+          notes={notes}
+          onCellClick={handleCellClick}
+        />
+      )}
+      {grid && (
+        <VirtualKeyboard
+          selectedCell={selectedCell}
+          notesMode={notesMode}
+          onNotesClick={handleNotesClick}
+          onEraseClick={handleEraseClick}
+          onResetClick={handleResetClick}
+          onNumberClick={handleNumberClick}
+        />
+      )}
     </div>
   );
 };
