@@ -200,9 +200,8 @@ const Sudoku = () => {
         const data = await response.json();
         const { puzzle } = data.data;
         const newGrid = convertStringToGrid(puzzle);
-        console.log(newGrid); // Can see a filled 2d array
-        setGrid[newGrid];
-        // setinitialCellsMap(newGrid.map((row) => row.map((cell) => cell !== 0)));
+        setGrid(newGrid);
+        setinitialCellsMap(newGrid.map((row) => row.map((cell) => cell !== 0)));
       } catch (err) {
         console.log(err);
       } finally {

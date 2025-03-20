@@ -7,7 +7,7 @@ const SudokuCell = ({ digit, row, col, initialCell, selectedCell, notes, matchin
             matchingNumber ? "text-sky-300" : initialCell ? "text-gray-300" : "text-sky-500"
           } text-2xl md:text-3xl ${matchingNumber && "font-bold"} ring-1 ${
             selectedCell[0] === row || selectedCell[1] === col ? "ring-amber-500" : "ring-amber-900"
-          } rounded-sm`}
+          } rounded-sm select-none`}
         >
           {digit}
         </div>
@@ -20,7 +20,7 @@ const SudokuCell = ({ digit, row, col, initialCell, selectedCell, notes, matchin
           {[1, 2, 3, 4, 5, 6, 7, 8, 9].map((num) => (
             <div
               key={num}
-              className={`flex justify-center text-gray-100 md:text-gray-300 text-[7px] md:text-[10px] ${
+              className={`flex justify-center text-gray-100 md:text-gray-300 text-[7px] md:text-[10px] select-none ${
                 !notes.includes(num) && "invisible"
               }`}
             >
