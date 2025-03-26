@@ -1,8 +1,18 @@
 import { useState } from "react";
+import { Link } from "react-router";
 
 const CreateGame = () => {
   const [difficulty, setDifficulty] = useState("easy");
   const [isPublic, setIsPublic] = useState(false);
+
+  const generateRoomId = () => {
+    const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
+    let result = "";
+    for (let i = 0; i < 5; i++) {
+      result += characters.charAt(Math.floor(Math.random() * characters.length));
+    }
+    return result;
+  };
 
   return (
     <div className="flex flex-col items-center w-screen h-screen bg-slate-900">
@@ -65,9 +75,13 @@ const CreateGame = () => {
             </button>
           </div>
           <div className="flex justify-end mt-8">
-            <button className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 rounded-sm cursor-pointer">
+            <Link
+              to={`/${generateRoomId()}`}
+              state={{ difficulty: difficulty }}
+              className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 rounded-sm cursor-pointer"
+            >
               Create
-            </button>
+            </Link>
           </div>
         </div>
       </div>
