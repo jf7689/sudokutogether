@@ -3,6 +3,7 @@ import { Link } from "react-router";
 
 const CreateGame = () => {
   const [difficulty, setDifficulty] = useState("easy");
+  const [gameMode, setGameMode] = useState("casual");
   const [isPublic, setIsPublic] = useState(false);
 
   const generateRoomId = () => {
@@ -55,6 +56,34 @@ const CreateGame = () => {
             </button>
           </div>
 
+          <h2 className="text-gray-300 text-xl text-center py-4">Game Mode</h2>
+          <div className="flex gap-4">
+            <button
+              className={`${gameMode === "casual" && "bg-amber-500"} hover:bg-amber-500 ${
+                gameMode === "casual" ? "text-slate-900" : "text-amber-500"
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              onClick={() => setGameMode("casual")}
+            >
+              Casual
+            </button>
+            <button
+              className={`${gameMode === "challenge" && "bg-amber-500"} hover:bg-amber-500 ${
+                gameMode === "challenge" ? "text-slate-900" : "text-amber-500"
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              onClick={() => setGameMode("challenge")}
+            >
+              Challenge
+            </button>
+            <button
+              className={`${gameMode === "hardcore" && "bg-amber-500"} hover:bg-amber-500 ${
+                gameMode === "hardcore" ? "text-slate-900" : "text-amber-500"
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              onClick={() => setGameMode("hardcore")}
+            >
+              Hardcore
+            </button>
+          </div>
+
           <h2 className="text-gray-300 text-xl text-center py-4">Lobby Visibility</h2>
           <div className="flex gap-4">
             <button
@@ -77,7 +106,7 @@ const CreateGame = () => {
           <div className="flex justify-end mt-8">
             <Link
               to={`/${generateRoomId()}`}
-              state={{ difficulty: difficulty }}
+              state={{ difficulty, gameMode }}
               className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 rounded-sm cursor-pointer"
             >
               Create

@@ -2,7 +2,7 @@ const VirtualKeyboard = ({ selectedCell, notesMode, onNotesClick, onEraseClick, 
   const numbers = [1, 2, 3, 4, 5, 6, 7, 8, 9];
 
   return (
-    <div className="flex flex-col w-[320px] md:w-[400px] ring-1 ring-amber-500 rounded-sm">
+    <div className="flex flex-col w-[320px] md:w-[400px] border-1 border-amber-500 rounded-sm">
       <div className="flex justify-evenly border-b-1 border-gray-500">
         <div
           className="hover:bg-slate-950 active:bg-slate-950 w-full h-full md:py-1 cursor-pointer"
