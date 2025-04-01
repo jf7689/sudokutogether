@@ -6,7 +6,7 @@ import { useLocation } from "react-router";
 const Game = () => {
   const location = useLocation();
   const gameSettings = location.state;
-  const [isStarted, setIsStarted] = useState(true);
+  const [isStarted, setIsStarted] = useState(false);
   return (
     <div className="flex flex-col items-center h-screen bg-slate-900 ">
       {isStarted ? <Sudoku /> : <PlayerList />}

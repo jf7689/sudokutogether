@@ -25,7 +25,7 @@ const CreateGame = () => {
             <button
               className={`${difficulty === "easy" && "bg-amber-500"} hover:bg-amber-500 ${
                 difficulty === "easy" ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setDifficulty("easy")}
             >
               Easy
@@ -33,7 +33,7 @@ const CreateGame = () => {
             <button
               className={`${difficulty === "medium" && "bg-amber-500"} hover:bg-amber-500 ${
                 difficulty === "medium" ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setDifficulty("medium")}
             >
               Medium
@@ -41,7 +41,7 @@ const CreateGame = () => {
             <button
               className={`${difficulty === "hard" && "bg-amber-500"} hover:bg-amber-500 ${
                 difficulty === "hard" ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setDifficulty("hard")}
             >
               Hard
@@ -49,7 +49,7 @@ const CreateGame = () => {
             <button
               className={`${difficulty === "extreme" && "bg-amber-500"} hover:bg-amber-500 ${
                 difficulty === "extreme" ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setDifficulty("extreme")}
             >
               Extreme
@@ -61,7 +61,7 @@ const CreateGame = () => {
             <button
               className={`${gameMode === "casual" && "bg-amber-500"} hover:bg-amber-500 ${
                 gameMode === "casual" ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setGameMode("casual")}
             >
               Casual
@@ -69,7 +69,7 @@ const CreateGame = () => {
             <button
               className={`${gameMode === "challenge" && "bg-amber-500"} hover:bg-amber-500 ${
                 gameMode === "challenge" ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setGameMode("challenge")}
             >
               Challenge
@@ -77,7 +77,7 @@ const CreateGame = () => {
             <button
               className={`${gameMode === "hardcore" && "bg-amber-500"} hover:bg-amber-500 ${
                 gameMode === "hardcore" ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setGameMode("hardcore")}
             >
               Hardcore
@@ -89,7 +89,7 @@ const CreateGame = () => {
             <button
               className={`${isPublic && "bg-amber-500"} hover:bg-amber-500 ${
                 isPublic ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setIsPublic(true)}
             >
               Public
@@ -97,7 +97,7 @@ const CreateGame = () => {
             <button
               className={`${!isPublic && "bg-amber-500"} hover:bg-amber-500 ${
                 !isPublic ? "text-slate-900" : "text-amber-500"
-              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 rounded-sm cursor-pointer`}
+              } hover:text-slate-900 font-semibold px-4 py-2 border-1 border-amber-500 outline-0 rounded-sm cursor-pointer`}
               onClick={() => setIsPublic(false)}
             >
               Private
@@ -107,7 +107,7 @@ const CreateGame = () => {
             <Link
               to={`/${generateRoomId()}`}
               state={{ difficulty, gameMode }}
-              className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 rounded-sm cursor-pointer"
+              className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 outline-0 rounded-sm cursor-pointer"
             >
               Create
             </Link>
