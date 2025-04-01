@@ -1,9 +1,10 @@
 import { io } from "socket.io-client";
 import { HOST } from "@/utils/constants";
+import { SOCKET_EVENTS } from "./events";
 
 let socket;
 
-const initSocket = () => {
+const initSocket = (username) => {
   socket = io(HOST, {
     autoConnect: true,
     reconnection: true,
@@ -11,15 +12,19 @@ const initSocket = () => {
     reconnectionDelay: 1000,
   });
 
-  socket.on("connect", () => {
+  socket.on(SOCKET_EVENTS.CONNECT, () => {
     console.log("Connected to server with ID:", socket.id);
+
+    if (username) {
+      setUsername(username);
+    }
   });
 
   socket.on("connect_error", (err) => {
     console.error("Connection error:", err.message);
   });
 
-  socket.on("disconnect", () => {
+  socket.on(SOCKET_EVENTS.DISCONNECT, () => {
     console.log("Disconnected:");
   });
 
@@ -41,4 +46,13 @@ const disconnectSocket = () => {
   }
 };
 
-export { initSocket, getSocket, disconnectSocket };
+// Set username for current socket
+const setUsername = (username) => {
+  if (socket && username) {
+    socket.emit("setUsername", username);
+    return true;
+  }
+  return false;
+};
+
+export { initSocket, getSocket, disconnectSocket, setUsername };

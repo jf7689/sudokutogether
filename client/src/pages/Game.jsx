@@ -9,7 +9,8 @@ const Game = () => {
   const [isStarted, setIsStarted] = useState(false);
   return (
     <div className="flex flex-col items-center h-screen bg-slate-900 ">
-      {isStarted ? <Sudoku /> : <PlayerList />}
+      <PlayerList />
+      {isStarted && <Sudoku />}
 
       <div className="flex flex-col items-center w-[320px] md:w-[400px] mt-8 py-1 border-1 border-amber-500 rounded-sm">
         <h3 className="text-gray-300 text-xl">Game Settings</h3>

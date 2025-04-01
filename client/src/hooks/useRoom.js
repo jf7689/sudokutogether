@@ -37,12 +37,12 @@ const useRoom = (initialRoom = "") => {
 
     // Setup room event listeners
     const onUserJoined = (data) => {
-      console.log(`User ${data.userId} joined room ${data.roomId}`);
+      console.log(`User ${data.username} (${data.userId}) joined room ${data.roomId}`);
       fetchRoomUsers();
     };
 
     const onUserLeft = (data) => {
-      console.log(`User ${data.userId} left room ${data.roomId}`);
+      console.log(`User ${data.username} (${data.userId}) left room ${data.roomId}`);
       fetchRoomUsers();
     };
 
@@ -60,6 +60,11 @@ const useRoom = (initialRoom = "") => {
     // Initial join room if provided
     if (initialRoom && isConnected) {
       joinRoom(initialRoom);
+    }
+
+    // Get users when joining a room
+    if (currentRoom) {
+      fetchRoomUsers();
     }
 
     // Cleanup

@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import env from "../config/env.js";
+import { setupRoomHandlers } from "./handlers/roomHandler.js";
 
 const setupSocket = (server) => {
   const io = new Server(server, {
@@ -12,15 +13,7 @@ const setupSocket = (server) => {
   io.on("connection", (socket) => {
     console.log("A user connected:", socket.id);
 
-    socket.on("joinRoom", (roomId) => {
-      socket.join(roomId);
-      console.log(`User ${socket.id} joined room: ${roomId}`);
-    });
-
-    socket.on("leaveRoom", (roomId) => {
-      socket.leave(roomId);
-      console.log(`User ${socket.id} left room: ${roomId}`);
-    });
+    setupRoomHandlers(io, socket);
 
     // Handle disconnection
     socket.on("disconnect", () => {
