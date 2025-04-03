@@ -3,6 +3,7 @@ import { createServer } from "http";
 import cors from "cors";
 import env from "./config/env.js";
 import puzzlesRouter from "./routes/puzzles.js";
+import lobbiesRouter from "./routes/lobbies.js";
 import setupSocket from "./socket/index.js";
 
 // Express app
@@ -23,6 +24,7 @@ app.use(
 app.use(express.json());
 
 app.use("/api", puzzlesRouter);
+app.use("/api", lobbiesRouter);
 
 server.listen(port, () => {
   console.log(`Listening on port ${port}`);

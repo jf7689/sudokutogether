@@ -104,13 +104,9 @@ const CreateGame = () => {
             </button>
           </div>
           <div className="flex justify-end mt-8">
-            <Link
-              to={`/${generateRoomId()}`}
-              state={{ difficulty, gameMode }}
-              className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 outline-0 rounded-sm cursor-pointer"
-            >
+            <button className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 outline-0 rounded-sm cursor-pointer">
               Create
-            </Link>
+            </button>
           </div>
         </div>
       </div>
