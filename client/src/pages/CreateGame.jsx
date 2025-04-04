@@ -1,18 +1,34 @@
 import { useState } from "react";
-import { Link } from "react-router";
+import { useNavigate } from "react-router";
+import { HOST } from "@/utils/constants";
 
 const CreateGame = () => {
   const [difficulty, setDifficulty] = useState("easy");
   const [gameMode, setGameMode] = useState("casual");
   const [isPublic, setIsPublic] = useState(false);
+  const navigate = useNavigate();
 
-  const generateRoomId = () => {
+  const handleCreateClick = async () => {
     const characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ0123456789";
-    let result = "";
+    let name = "";
     for (let i = 0; i < 5; i++) {
-      result += characters.charAt(Math.floor(Math.random() * characters.length));
+      name += characters.charAt(Math.floor(Math.random() * characters.length));
     }
-    return result;
+
+    try {
+      const response = await fetch(`${HOST}/api/lobbies`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ name, difficulty, gameMode, visibility: isPublic }),
+      });
+      const data = await response.json();
+
+      if (data.status === 201) navigate(`/${name}`);
+    } catch (err) {
+      console.log(err);
+    }
   };
 
   return (
@@ -104,7 +120,10 @@ const CreateGame = () => {
             </button>
           </div>
           <div className="flex justify-end mt-8">
-            <button className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 outline-0 rounded-sm cursor-pointer">
+            <button
+              className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 outline-0 rounded-sm cursor-pointer"
+              onClick={handleCreateClick}
+            >
               Create
             </button>
           </div>

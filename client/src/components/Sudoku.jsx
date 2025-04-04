@@ -212,7 +212,7 @@ const Sudoku = () => {
     fetchSudoku();
   }, []);
 
-  if (loading) return <div className="text-gray-300">Loading Sudoku puzzle...</div>;
+  if (loading) return <div className="text-gray-300 text-xl">Creating game...</div>;
 
   return (
     <div className="flex flex-col items-center gap-4">

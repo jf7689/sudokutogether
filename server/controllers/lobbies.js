@@ -22,7 +22,7 @@ const getLobby = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({
+    return res.status(500).json({
       status: 500,
       error: "Failed to retrieve a lobby data",
     });
@@ -43,7 +43,7 @@ const createLobby = async (req, res) => {
     });
   } catch (err) {
     console.log(err);
-    return res.status(400).json({
+    return res.status(500).json({
       status: 500,
       error: "Failed to create a lobby",
     });
