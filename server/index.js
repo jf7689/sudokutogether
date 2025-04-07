@@ -15,7 +15,7 @@ setupSocket(server);
 
 app.use(
   cors({
-    origin: [env.origin],
+    origin: [env.origin, "http://localhost:5174"],
     methods: ["GET"],
     credentials: true,
   })

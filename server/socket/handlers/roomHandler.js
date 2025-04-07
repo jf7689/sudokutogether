@@ -18,7 +18,7 @@ const setupRoomHandlers = (io, socket) => {
     });
   });
 
-  // LEave a room
+  // Leave a room
   socket.on("leaveRoom", (roomId) => {
     socket.leave(roomId);
     console.log(`User ${socket.data.username || socket.id} left room: ${roomId}`);

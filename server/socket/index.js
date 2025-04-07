@@ -5,7 +5,7 @@ import { setupRoomHandlers } from "./handlers/roomHandler.js";
 const setupSocket = (server) => {
   const io = new Server(server, {
     cors: {
-      origin: env.origin,
+      origin: [env.origin, "http://localhost:5174"],
       methods: ["GET", "POST"],
     },
   });
