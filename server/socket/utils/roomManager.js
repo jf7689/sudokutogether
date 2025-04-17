@@ -1,39 +1,34 @@
 class RoomManager {
-  constructor() {
-    // Store room info
+  constructor(io) {
+    this.io = io;
     this.rooms = new Map();
   }
 
-  createRoom(roomId, ownderId, metadata = {}) {
-    const roomInfo = {
+  // Create a new room
+  createRoom(roomId, metadata = {}) {
+    this.rooms.set(roomId, {
       id: roomId,
-      owner: ownderId,
-      metadata: metadata,
-    };
-
-    this.rooms.set(roomId, roomInfo);
-    return roomInfo;
+      createdAt: new Date(),
+      ...metadata,
+    });
+    return this.rooms.get(roomId);
   }
 
+  // Get room
   getRoom(roomId) {
     return this.rooms.get(roomId);
   }
 
-  isRoomOwner(roomId, userId) {
-    const room = this.rooms.get(roomId);
-    return room && room.owner === userId;
-  }
-
-  transferOwnership(roomId, newOwnerId) {
-    const room = this.rooms.get(roomId);
-    if (room) {
-      room.owner = newOwnerId;
-      return true;
-    }
-    return false;
-  }
-
+  // Delete room
   deleteRoom(roomId) {
     return this.rooms.delete(roomId);
   }
+
+  // Get all users in a room
+  async getRoomUsers(roomId) {
+    const sockets = await this.io.in(roomId).fetchSockets();
+    return sockets.map((socket) => socket.id);
+  }
 }
+
+export { RoomManager };

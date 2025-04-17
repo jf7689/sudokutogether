@@ -1,5 +1,6 @@
 import { Server } from "socket.io";
 import env from "../config/env.js";
+import { RoomManager } from "./utils/roomManager.js";
 import { setupRoomHandlers } from "./handlers/roomHandler.js";
 
 const setupSocket = (server) => {
@@ -10,10 +11,13 @@ const setupSocket = (server) => {
     },
   });
 
+  // Create room manager
+  const roomManager = new RoomManager(io);
+
   io.on("connection", (socket) => {
     console.log("A user connected:", socket.id);
 
-    setupRoomHandlers(io, socket);
+    setupRoomHandlers(io, socket, roomManager);
 
     // Handle disconnection
     socket.on("disconnect", () => {

@@ -36,6 +36,9 @@ const Game = () => {
       {!loading && gameSettings === null && <div className="text-gray-300 text-xl">Game does not exist!!!</div>}
 
       {gameSettings && <PlayerList />}
+      <button className="bg-sky-500 hover:bg-sky-300 text-slate-900 font-semibold px-4 py-2 outline-0 rounded-sm cursor-pointer">
+        Start
+      </button>
       {isStarted && <Sudoku />}
 
       {gameSettings && (

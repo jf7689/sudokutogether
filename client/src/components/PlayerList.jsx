@@ -5,8 +5,8 @@ import { useRoom } from "@/hooks/useRoom";
 
 const PlayerList = () => {
   const { roomId } = useParams();
-  const { isConnected, username, updateUsername } = useContext(SocketContext);
-  const { currentRoom, roomUsers, joinRoom, leaveRoom } = useRoom();
+  const { username, updateUsername } = useContext(SocketContext);
+  const { currentRoom, roomUsers, joinRoom } = useRoom();
   const [inputUsername, setInputUsername] = useState(username || "");
   const [error, setError] = useState("");
 
